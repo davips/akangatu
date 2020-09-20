@@ -1,4 +1,5 @@
 import json
+from abc import abstractmethod, ABC
 from functools import cached_property
 
 from numpy.random.mtrand import choice
@@ -6,7 +7,7 @@ from numpy.random.mtrand import choice
 from transf.absdata import InnocuousInnerData
 
 
-class withSampling:
+class withSampling(ABC):
     """Transform data according to a sampleable configuration.
 
     Should be inherited together with a descendent of Transformer
@@ -24,14 +25,22 @@ class withSampling:
     # noinspection PyUnresolvedReferences
     @cached_property
     def parameters(self):
+        params = self._parameters_()
+        for k, v in self.held.items():
+            params[k] = [v]
+        return params
+
+    @abstractmethod
+    def _parameters_(self):
+        pass
+
+    def _from_file(self):
         filename = f"kururu/resources/parameters/{self.name}.json"
         try:
             with open(filename, "r") as f:
                 # return Parameters(self.name, self.context, json.load(f))
                 params = json.load(f)
                 del params["meta-info"]
-                for k, v in self.held.items():
-                    params[k] = [v]
                 return params
         except FileNotFoundError:
             raise Exception(f"Impossible to sample. Missing parameters file:{filename}!")
