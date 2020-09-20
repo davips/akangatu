@@ -1,8 +1,9 @@
 import json
 from functools import cached_property
-from random import choice
 
-from transf.absdata import InocuousTrData
+from numpy.random.mtrand import choice
+
+from transf.absdata import InocuousInnerData
 
 
 class withSampling:
@@ -13,7 +14,7 @@ class withSampling:
     and the implementer should override sample() at 'init':
     self.sample = self.sample_
     """
-    trdata = InocuousTrData()
+    inner = InocuousInnerData()
 
     @cached_property
     def held(self):
@@ -33,7 +34,7 @@ class withSampling:
                     params[k] = [v]
                 return params
         except FileNotFoundError:
-            raise Exception(f"Impossible to sample. Missing parameters file:{filename}.json!")
+            raise Exception(f"Impossible to sample. Missing parameters file:{filename}!")
 
     @classmethod
     def sample(cls, track=False):
@@ -41,11 +42,21 @@ class withSampling:
 
     def sample_(self, track=False):  # TODO: seed
         config, choices = {}, {}
-        for k, lst in self.parameters.items():  # TODO: nested dicts / key tracks from the root node
-            idx = choice(range(len(lst)))
-            config[k] = lst[idx]
-            choices[k] = idx
-        # noinspection PyArgumentList
-        obj = self.__class__(**config) if not self.trdata else self.__class__(self.trdata, **config)
 
+        def sample(dic):
+            for k, content in dic.items():  # TODO: nested dicts / key tracks from the root node
+                if isinstance(content, dict):
+                    idx = choice(list(content.keys()))
+                    sample(content[idx])
+                    value = idx
+                else:
+                    idx = choice(range(len(content)))
+                    value = content[idx]
+                config[k] = value
+                choices[k] = idx
+
+        sample(self.parameters)
+
+        # noinspection PyArgumentList
+        obj = self.__class__(self.inner, **config) if self.inner else self.__class__(**config)
         return (obj, choices) if track else obj
