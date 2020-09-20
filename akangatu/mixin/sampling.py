@@ -3,7 +3,7 @@ from functools import cached_property
 
 from numpy.random.mtrand import choice
 
-from transf.absdata import InocuousInnerData
+from transf.absdata import InnocuousInnerData
 
 
 class withSampling:
@@ -14,7 +14,7 @@ class withSampling:
     and the implementer should override sample() at 'init':
     self.sample = self.sample_
     """
-    inner = InocuousInnerData()
+    inner = InnocuousInnerData()
 
     @cached_property
     def held(self):
