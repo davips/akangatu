@@ -13,6 +13,3 @@ class asMacro(ABC):
 
     def _transform_(self, data):
         return self.transformer.transform(data)
-
-    def _config_(self):
-        return self.transformer.config
