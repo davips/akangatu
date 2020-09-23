@@ -73,13 +73,10 @@ class ContainerN(Transformer, withSampling, asOperand, ABC):
         pass
 
     def _uuid_(self):
-        uuid = UUID(json.dumps(self.jsonable, sort_keys=True).encode())
+        uuid = UUID(json.dumps(self.jsonable, sort_keys=True, ensure_ascii=False, cls=CustomJSONEncoder).encode())
         if self.inner:
             uuid = Ins(self.inner).uuid * uuid
         return uuid
-
-    def _longname_(self):
-        return self.__class__.__name__ + f"[{' '.join([tr.longname for tr in self.transformers])}]"
 
     def __call__(self, inner):  # TODO: seed
         instance = self.__class__(*self.transformers)

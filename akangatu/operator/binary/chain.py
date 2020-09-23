@@ -11,3 +11,6 @@ class Chain(op.Mul, ContainerN):
         for transf in self.transformers:
             data = transf.transform(data)
         return data
+
+    def _longname_(self):
+        return '*'.join([tr.longname for tr in self.transformers])
