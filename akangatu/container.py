@@ -72,12 +72,6 @@ class ContainerN(Transformer, withSampling, asOperand, ABC):
     def _transform_(self, data: AbsData):
         pass
 
-    def _uuid_(self):
-        uuid = UUID(json.dumps(self.jsonable, sort_keys=True, ensure_ascii=False, cls=CustomJSONEncoder).encode())
-        if self.inner:
-            uuid = Ins(self.inner).uuid * uuid
-        return uuid
-
     def __call__(self, inner):  # TODO: seed
         instance = self.__class__(*self.transformers)
         instance._inner = inner

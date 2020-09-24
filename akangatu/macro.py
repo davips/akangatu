@@ -6,13 +6,14 @@ from akangatu.dataindependent import DataIndependent
 from cruipto.uuid import UUID
 from transf.absdata import AbsData
 from transf.mixin.identification import withIdentification
+from transf.mixin.noop import asNoOp
 
 
 class asMacro(withIdentification, ABC):
     @cached_property
     def transformer(self):
         transformer = self._transformer_()
-        return Begin(self.name) * transformer * End(self.name)
+        return Begin(transformer.id) * transformer * End(transformer.id)
 
     @abstractmethod
     def _transformer_(self):
@@ -25,22 +26,20 @@ class asMacro(withIdentification, ABC):
         return self.transformer.uuid
 
 
-class Begin(DataIndependent):  # HINT: dataclasses does not work inside operate(): "object type has no isclass attribute"
-    def __init__(self, transfname):
-        self.transfname = transfname
+class Begin( DataIndependent):  # HINT: dataclasses does not work inside operate(): "object type has no isclass attribute"
+    def __init__(self, transfuuid):
+        self._transfuuid = transfuuid
 
     def _transform_(self, data: AbsData):
-        return data.replace(self)
+        return data.replace(self)  #TODO: revert with Rev(Begin)
 
     def _config_(self):
-        return {"transfname": self.transfname}
-
-    def _uuid_(self):
-        return UUID.identity
+        return {"transfname": self._transfuuid}
 
     def _longname_(self):
-        return super().name + f"({self.transfname})"
+        return "{" + super().name + f"{self._transfuuid}"
 
 
-class End(Begin):
-    pass
+class End(asNoOp, Begin):
+    def _longname_(self):
+        return super().name + f"{self._transfuuid}" + "}"

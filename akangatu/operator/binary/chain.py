@@ -1,5 +1,7 @@
-from akangatu.container import ContainerN
+from functools import cached_property
+
 import transf.operator as op
+from akangatu.container import ContainerN
 
 
 class Chain(op.Mul, ContainerN):
@@ -14,3 +16,9 @@ class Chain(op.Mul, ContainerN):
 
     def _longname_(self):
         return '*'.join([tr.longname for tr in self.transformers])
+
+    def _uuid_(self):
+        uuid = self.transformers[0].uuid
+        for transf in self.transformers[1:]:
+            uuid *= transf.uuid
+        return uuid
