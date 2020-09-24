@@ -1,4 +1,4 @@
-from akangatu.mixin.sampling import withSampling
+from akangatu.abs.mixin.sampling import withSampling
 from transf._ins import Ins as Ins_
 from transf.mixin.operand import asOperand
 

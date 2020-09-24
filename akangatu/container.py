@@ -2,7 +2,7 @@ import json
 from abc import ABC, abstractmethod
 
 from akangatu import Ins
-from akangatu.mixin.sampling import withSampling
+from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
 from transf.absdata import AbsData
 from transf.customjsonencoder import CustomJSONEncoder

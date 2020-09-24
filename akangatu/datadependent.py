@@ -1,6 +1,6 @@
 from abc import ABC
 
-from akangatu.mixin.sampling import withSampling
+from akangatu.abs.mixin.sampling import withSampling
 from transf.ddtransf import DDTransf_
 from transf.mixin.operand import asOperand
 

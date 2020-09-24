@@ -1,7 +1,7 @@
 from abc import ABC
 
 from aiuna.content.specialdata import NoData
-from akangatu.mixin.sampling import withSampling
+from akangatu.abs.mixin.sampling import withSampling
 from transf.ditransf import DITransf_
 from transf.mixin.operand import asOperand
 
