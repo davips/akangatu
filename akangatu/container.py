@@ -7,17 +7,17 @@ from cruipto.uuid import UUID
 from transf.absdata import AbsData
 from transf.customjsonencoder import CustomJSONEncoder
 from transf.mixin.operand import asOperand
-from transf.transformer import Transformer
+from transf.step import Step
 
 
-class Container1(Transformer, withSampling, asOperand, ABC):
-    def __init__(self, transformer):
-        self.transformer = transformer
-        self._config = {"transformer": transformer}
+class Container1(Step, withSampling, asOperand, ABC):
+    def __init__(self, step):
+        self.step = step
+        self._config = {"step": step}
         self._inner = None  # InnocuousInnerData()
 
-    def _core_transform_(self, data: AbsData):
-        return self._transform_(data)
+    def _core_process_(self, data: AbsData):
+        return self._process_(data)
 
     def _config_(self):
         return self._config
@@ -26,10 +26,10 @@ class Container1(Transformer, withSampling, asOperand, ABC):
         return self._inner
 
     def _parameters_(self):
-        return {"transformer": self.transformer.parameters}
+        return {"step": self.step.parameters}
 
     @abstractmethod
-    def _transform_(self, data: AbsData):
+    def _process_(self, data: AbsData):
         pass
 
     def _uuid_(self):  # TODO: deduplicate code; mais um mixin? classe mãe?
@@ -42,22 +42,22 @@ class Container1(Transformer, withSampling, asOperand, ABC):
         return self.__class__.__name__
 
     def _longname_(self):
-        return self.__class__.__name__ + f"[{self.transformer.longname}]"
+        return self.__class__.__name__ + f"[{self.step.longname}]"
 
     def __call__(self, inner):  # TODO: seed
-        instance = self.__class__(self.transformer)
+        instance = self.__class__(self.step)
         instance._inner = inner
         return instance
 
 
-class ContainerN(Transformer, withSampling, asOperand, ABC):
-    def __init__(self, *transformers):
-        self.transformers = [tr if isinstance(tr, Transformer) else tr() for tr in transformers]
-        self._config = {"transformers": transformers}
+class ContainerN(Step, withSampling, asOperand, ABC):
+    def __init__(self, *steps):
+        self.steps = [tr if isinstance(tr, Step) else tr() for tr in steps]
+        self._config = {"steps": steps}
         self._inner = None  # InnocuousInnerData()
 
-    def _core_transform_(self, data: AbsData):
-        return self._transform_(data)
+    def _core_process_(self, data: AbsData):
+        return self._process_(data)
 
     def _config_(self):
         return self._config
@@ -66,14 +66,14 @@ class ContainerN(Transformer, withSampling, asOperand, ABC):
         return self._inner
 
     def _parameters_(self):
-        return {"transformers": self.transformers.parameters}
+        return {"steps": self.steps.parameters}
 
     @abstractmethod
-    def _transform_(self, data: AbsData):
+    def _process_(self, data: AbsData):
         pass
 
     def __call__(self, inner):  # TODO: seed
-        instance = self.__class__(*self.transformers)
+        instance = self.__class__(*self.steps)
         instance._inner = inner
         return instance
 
@@ -82,7 +82,7 @@ def traverse(params):
     """Assume all containers are configless"""
     # TODO: terminar essa tentativa de percorrer e talvez casar com tracking de valores previos
     for k, v in params.items():
-        if k == "transformers":
+        if k == "steps":
             for transf in v:
                 traverse(transf.parameters)
         else:

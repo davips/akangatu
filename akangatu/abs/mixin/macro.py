@@ -5,18 +5,25 @@ from akangatu.delimiter import Begin, End
 from transf.mixin.identification import withIdentification
 
 
-class asMacro(withIdentification, ABC):
+class asMacro(withIdentification, ABC):  # TODO: todo container precisa passar inner data pra dentro?
     @cached_property
-    def transformer(self):
-        transformer = self._transformer_()
-        return Begin(transformer.id) * transformer * End(transformer.id)
+    def step(self):
+        step = self._step_()
+        if self.inner and callable(step):
+            step = step(self.inner)
+        return Begin(step) * step * End(step)
 
     @abstractmethod
-    def _transformer_(self):
+    def _step_(self):
         pass
 
-    def _transform_(self, data):
-        return self.transformer.transform(data)
+    def _process_(self, data):
+        return self.step.process(data)
 
     def _uuid_(self):
-        return self.transformer.uuid
+        return self.step.uuid
+
+    def __call__(self, inner):  # TODO: seed
+        instance = self.__class__()
+        instance._inner = inner
+        return instance

@@ -1,24 +1,30 @@
 from functools import cached_property
 
 import transf.operator as op
+from aiuna.content.specialdata import Root
 from akangatu.container import ContainerN
 
 
 class Chain(op.Mul, ContainerN):
-    def __init__(self, *transformers):
-        super().__init__(*transformers)
-        ContainerN.__init__(self, *transformers)
+    def __init__(self, *steps):
+        super().__init__(*steps)
+        ContainerN.__init__(self, *steps)
 
-    def _transform_(self, data):  # TODO: expose internal models
-        for transf in self.transformers:
-            data = transf.transform(data)
+    def _process_(self, data):  # TODO: expose internal models
+        for transf in self.steps:
+            data = transf.process(data)
         return data
 
+    @cached_property
+    def data(self):
+        """Result of a transformation from Root data."""
+        return self.process(Root)
+
     def _longname_(self):
-        return '*'.join([tr.longname for tr in self.transformers])
+        return '*'.join([tr.longname for tr in self.steps])
 
     def _uuid_(self):
-        uuid = self.transformers[0].uuid
-        for transf in self.transformers[1:]:
+        uuid = self.steps[0].uuid
+        for transf in self.steps[1:]:
             uuid *= transf.uuid
         return uuid

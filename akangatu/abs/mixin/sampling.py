@@ -10,7 +10,7 @@ from transf.absdata import InnocuousInnerData
 class withSampling(ABC):
     """Transform data according to a sampleable configuration.
 
-    Should be inherited together with a descendent of Transformer
+    Should be inherited together with a descendent of Step
     (because 'name' and 'held' attributes are needed)
     and the implementer should override sample() at 'init':
     self.sample = self.sample_

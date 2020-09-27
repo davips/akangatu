@@ -1,7 +1,7 @@
-from transf.transformer import Transformer
+from transf.step import Step
 
 
-class Stream(Transformer):
+class Stream(Step):
     def _transform_(self, data):
         pass
 
