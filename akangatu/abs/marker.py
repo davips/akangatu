@@ -13,7 +13,7 @@ class Marker(Container1):
     def _process_(self, data: AbsData):
         return data.replace(self).replace(Rev(self))
 
-    def _config_(self):
-        return {"transfname": self._transfuuid}
+    def _uuid_(self):
+        return UUID.identity
 
 # HINT: dataclasses does not work inside operate(): "object type has no isclass attribute"

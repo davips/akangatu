@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from akangatu import Ins
 from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
-from transf.absdata import AbsData
+from transf.absdata import AbsData, InnocuousInnerData
 from transf.customjsonencoder import CustomJSONEncoder
 from transf.mixin.operand import asOperand
 from transf.step import Step
@@ -12,15 +12,12 @@ from transf.step import Step
 
 class Container1(Step, withSampling, asOperand, ABC):
     def __init__(self, step):
+        super().__init__({"step": step})
         self.step = step
-        self._config = {"step": step}
-        self._inner = None  # InnocuousInnerData()
+        self._inner = InnocuousInnerData()  # TODO: ??
 
     def _core_process_(self, data: AbsData):
         return self._process_(data)
-
-    def _config_(self):
-        return self._config
 
     def _inner_(self):
         return self._inner
@@ -52,9 +49,9 @@ class Container1(Step, withSampling, asOperand, ABC):
 
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, *steps):
+        super().__init__({"steps": steps})
         self.steps = [tr if isinstance(tr, Step) else tr() for tr in steps]
-        self._config = {"steps": steps}
-        self._inner = None  # InnocuousInnerData()
+        self._inner = InnocuousInnerData()
 
     def _core_process_(self, data: AbsData):
         return self._process_(data)

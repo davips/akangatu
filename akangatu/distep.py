@@ -1,7 +1,7 @@
 from abc import ABC
 
 from akangatu.abs.mixin.sampling import withSampling
-from transf.ditransf import DataIndependentStep_
+from transf.dataindependentstep_ import DataIndependentStep_
 from transf.mixin.operand import asOperand
 
 
