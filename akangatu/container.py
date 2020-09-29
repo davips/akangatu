@@ -11,10 +11,12 @@ from transf.step import Step
 
 
 class Container1(Step, withSampling, asOperand, ABC):
-    def __init__(self, step):
-        super().__init__({"step": step})
+    # noinspection PyDefaultArgument
+    def __init__(self, step, config={}):
+        config = config.copy()
+        config["step"] = step
+        super().__init__(config)
         self.step = step if isinstance(step, Step) else step()
-
         self._inner = InnocuousInnerData()  # TODO: ??
 
     def _core_process_(self, data: AbsData):
