@@ -33,7 +33,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         pass
 
     def _uuid_(self):  # TODO: deduplicate code; mais um mixin? classe mãe?
-        uuid = UUID(json.dumps(self.jsonable, sort_keys=True, ensure_ascii=False, cls=CustomJSONEncoder).encode())
+        uuid = UUID(json.dumps(self.desc, sort_keys=True, ensure_ascii=False, cls=CustomJSONEncoder).encode())
         if self.inner:
             uuid = Insert(self.inner).uuid * uuid
         return uuid
@@ -53,7 +53,7 @@ class Container1(Step, withSampling, asOperand, ABC):
 
 
 class ContainerN(Step, withSampling, asOperand, ABC):
-    def __init__(self, *steps):
+    def __init__(self, steps):
         super().__init__({"steps": steps})
         self.steps = [step if isinstance(step, Step) else step() for step in steps]
         self._inner = InnocuousInnerData()

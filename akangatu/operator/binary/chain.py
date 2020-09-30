@@ -6,9 +6,14 @@ from akangatu.container import ContainerN
 
 
 class Chain(op.Mul, ContainerN):
-    def __init__(self, *steps):
+    def __init__(self, *args, steps=None):
+        if args and steps:
+            print("Wrong args: instantiating Chain is not recommended, use operator * instead.")
+            exit()
+        if args:
+            steps = args
         super().__init__(*steps)
-        ContainerN.__init__(self, *steps)
+        ContainerN.__init__(self, steps)
 
     def _process_(self, data):  # TODO: expose internal models
         for transf in self.steps:
