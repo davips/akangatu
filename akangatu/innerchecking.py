@@ -1,6 +1,6 @@
 from akangatu.distep import DIStep
 from transf.absdata import AbsData
-from transf.mixin.asnoop import asNoOp
+from transf.mixin.noop import asNoOp
 
 
 class EnsureNoInner(asNoOp, DIStep):

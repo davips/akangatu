@@ -53,8 +53,11 @@ class withSampling(ABC):
         config, choices = {}, {}
 
         def sample(dic):
-            for k, content in dic.items():  # TODO: nested dicts / key tracks from the root node
-                if isinstance(content, dict):
+            for k, content in dic.items():  # TODO:(?) nested dicts / key tracks from the root node
+                if k == "steps":
+                    value = content
+                    idx = 0
+                elif isinstance(content, dict):
                     idx = choice(list(content.keys()))
                     sample(content[idx])
                     value = idx

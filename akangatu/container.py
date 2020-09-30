@@ -54,6 +54,7 @@ class Container1(Step, withSampling, asOperand, ABC):
 
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, steps):
+        print("ssssssssssss",[s.name for s in steps])
         super().__init__({"steps": steps})
         self.steps = [step if isinstance(step, Step) else step() for step in steps]
         self._inner = InnocuousInnerData()
@@ -64,8 +65,8 @@ class ContainerN(Step, withSampling, asOperand, ABC):
     def _inner_(self):
         return self._inner
 
-    def _parameters_(self):
-        return {"steps": self.steps.parameters}
+    def _parameters_(self):  # TODO:will config match with stepclass?
+        return {"steps": [step.parameters for step in self.steps]}
 
     @abstractmethod
     def _process_(self, data: AbsData):

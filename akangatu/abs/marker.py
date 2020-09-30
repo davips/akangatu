@@ -6,7 +6,7 @@ from akangatu.distep import DIStep
 from akangatu.rev import Rev
 from cruipto.uuid import UUID
 from transf.absdata import AbsData
-from transf.mixin.asnoop import asNoOp
+from transf.mixin.noop import asNoOp
 from transf.mixin.identification import withIdentification
 
 
