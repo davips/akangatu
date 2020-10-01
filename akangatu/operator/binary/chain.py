@@ -1,5 +1,4 @@
 from functools import cached_property
-from itertools import takewhile
 
 import transf.operator as op
 from aiuna.content.specialdata import Root
@@ -18,7 +17,7 @@ class Chain(asStreamHandler, op.Mul, ContainerN):
         ContainerN.__init__(self, steps)
 
     def _workers_(self):
-        stream_handlers = (map(lambda step: step if isinstance(step, asStreamHandler) else None, self.steps)
+        stream_handlers = (map(lambda step: step if isinstance(step, asStreamHandler) else None, self.steps))
         return zip(map(lambda step: step.workers, stream_handlers))
 
     def _process_(self, data):  # TODO: expose internal models
