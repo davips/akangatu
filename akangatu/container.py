@@ -54,7 +54,7 @@ class Container1(Step, withSampling, asOperand, ABC):
 
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, steps):
-        print("ssssssssssss",[s.name for s in steps])
+        # print("ssssssssssss",[s.name for s in steps])
         super().__init__({"steps": steps})
         self.steps = [step if isinstance(step, Step) else step() for step in steps]
         self._inner = InnocuousInnerData()
