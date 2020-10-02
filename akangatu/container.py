@@ -54,9 +54,17 @@ class Container1(Step, withSampling, asOperand, ABC):
 
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, steps):
-        # print("ssssssssssss",[s.name for s in steps])
         super().__init__({"steps": steps})
-        self.steps = [step if isinstance(step, Step) else step() for step in steps]
+        self.steps = []
+        for step in steps:
+            if not isinstance(step, Step):
+                try:
+                    step = step()
+                except Exception as e:
+                    print(e)
+                    print("Wrong arg for ContainerN:", step)
+                    exit()
+            self.steps.append(step)
         self._inner = InnocuousInnerData()
 
     def _core_process_(self, data: AbsData):
