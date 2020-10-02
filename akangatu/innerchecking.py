@@ -22,4 +22,4 @@ class EnsureInner(asNoOp, DIStep):
         if not data.inner:
             print("Cannot proceed without inner data!\n", data.id, ":", data.history)
             exit()
-        return data  # TODO: esses caras não aparecem no hist, mas poderiam ser ter placeholders; vale a pena?
+        return data  # TODO: esses caras não aparecem no hist, mas poderiam ter placeholders; vale a pena? só se o histórico fosse usado p/ reconstruir expression original
