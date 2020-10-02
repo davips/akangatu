@@ -1,6 +1,5 @@
 from akangatu.container import Container1
 from transf.absdata import AbsData
-from transf.step import Step
 
 
 class Rev(Container1):  # may not need new() from Container1
