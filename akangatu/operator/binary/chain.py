@@ -1,13 +1,10 @@
 from functools import cached_property
-from itertools import takewhile
-
 import transf.operator as op
 from aiuna.content.specialdata import Root
 from akangatu.container import ContainerN
-from transf.mixin.streamhandler import asStreamHandler
 
 
-class Chain(asStreamHandler, op.Mul, ContainerN):
+class Chain(op.Mul, ContainerN):
     def __init__(self, *args, steps=None):
         if args and steps:
             print("Wrong args: instantiating Chain is not recommended, use operator * instead.")
@@ -16,13 +13,6 @@ class Chain(asStreamHandler, op.Mul, ContainerN):
             steps = args
         super().__init__(*steps)
         ContainerN.__init__(self, steps)
-
-    def _workers_(self):
-        def badstep(step):
-            print(f"Non streamer {step} is not expected to come before reduce!")
-
-        workers = takewhile(lambda step: step if isinstance(step, asStreamHandler) else badstep(step), self.steps)
-        return zip(map(lambda step: step.workers, workers))
 
     def _process_(self, data):  # TODO: expose internal models
         for transf in self.steps:
