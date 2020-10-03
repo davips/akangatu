@@ -15,7 +15,7 @@ class withSampling(ABC):
     and the implementer should override sample() at 'init':
     self.sample = self.sample_
     """
-    inner = InnocuousInnerData()
+    inner = InnocuousInnerData()  #TODO: verify if this class is still needed
 
     @cached_property
     def held(self):
