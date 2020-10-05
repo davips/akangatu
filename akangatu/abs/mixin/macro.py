@@ -2,8 +2,7 @@ from abc import abstractmethod, ABC
 from functools import cached_property
 
 from akangatu import Insert
-from akangatu.delimiter import Begin, End
-from cruipto.uuid import UUID
+from akangatu.abs.delimiter import Begin, End
 from transf.absdata import AbsData
 from transf.mixin.identification import withIdentification
 
