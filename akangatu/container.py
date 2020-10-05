@@ -88,6 +88,16 @@ class ContainerN(Step, withSampling, asOperand, ABC):
         return instance
 
 
+# TODO: unpredictable steps (e.g. recommenders) can have uuid U based on config as usual,
+#  and the history of the data being processed can also grow internally as usual and generate the actual uuid A, but, at the end,
+#  a corrective uuid X need to be appended, just like a final step F.
+#  A * X = U      X = U / A
+#  F can be called Alias, because it adds a new uuid for the same resulting data.
+#  The only downside is that Cache cannot take advantage of a previously stored A, because it only nows U upfront.
+#  A partial workaround is to keep a table of aliases (or just write two entries),
+#  so at least when one have A they can look for a previously stored U.
+
+
 def traverse(params):
     """Assume all containers are configless"""
     # TODO: terminar essa tentativa de percorrer e talvez casar com tracking de valores previos
