@@ -1,8 +1,8 @@
 from abc import abstractmethod, ABC
 from functools import cached_property
 
-from akangatu import Insert
 from akangatu.abs.delimiter import Begin, End
+from transf._ins import Ins
 from transf.absdata import AbsData
 from transf.mixin.identification import withIdentification
 
@@ -23,7 +23,7 @@ class asMacro(withIdentification, ABC):  # TODO: todo container precisa passar i
     def _uuid_(self):  # TODO:deduplicate serialization and enforce stability and calculation reuse
         uuid = self.step.uuid
         if self.inner:
-            uuid = Insert(self.inner).uuid * uuid
+            uuid = Ins(self.inner).uuid * uuid
         return uuid
 
     def __call__(self, inner):  # TODO: seed

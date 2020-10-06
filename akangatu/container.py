@@ -1,9 +1,9 @@
 import json
 from abc import ABC, abstractmethod
 
-from akangatu import Insert
 from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
+from transf._ins import Ins
 from transf.absdata import AbsData, InnocuousInnerData
 from transf.customjson import CustomJSONEncoder
 from transf.mixin.operand import asOperand
@@ -35,7 +35,7 @@ class Container1(Step, withSampling, asOperand, ABC):
     def _uuid_(self):  # TODO: deduplicate code; mais um mixin? classe mãe?
         uuid = UUID(json.dumps(self.desc, sort_keys=True, ensure_ascii=False, cls=CustomJSONEncoder).encode())
         if self.inner:
-            uuid = Insert(self.inner).uuid * uuid
+            uuid = Ins(self.inner).uuid * uuid
         return uuid
 
     def _name_(self):
