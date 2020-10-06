@@ -1,12 +1,10 @@
 from akangatu.distep import DIStep
 from transf.absdata import AbsData
+from transf.mixin.config import asConfigLess
 from transf.mixin.noop import asNoOp
 
 
-class EnsureNoInner(asNoOp, DIStep):
-    def __init__(self):
-        super().__init__({})
-
+class EnsureNoInner(asNoOp, asConfigLess, DIStep):
     def _process_(self, data: AbsData):
         if data.inner:
             print("Cannot proceed with inner data!", data.inner.id)
@@ -14,12 +12,10 @@ class EnsureNoInner(asNoOp, DIStep):
         return data
 
 
-class EnsureInner(asNoOp, DIStep):
-    def __init__(self):
-        super().__init__({})
-
+class EnsureInner(asNoOp, asConfigLess, DIStep):
     def _process_(self, data: AbsData):
         if not data.inner:
-            print("Cannot proceed without inner data!\n", data.id, ":", data.history)
+            print("Cannot proceed without inner data!\n", data.id, ":", data.history ^ "longname")
+            # raise Exception
             exit()
         return data  # TODO: esses caras não aparecem no hist, mas poderiam ter placeholders; vale a pena? só se o histórico fosse usado p/ reconstruir expression original

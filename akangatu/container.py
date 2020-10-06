@@ -5,7 +5,7 @@ from akangatu import Insert
 from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
 from transf.absdata import AbsData, InnocuousInnerData
-from transf.customjsonencoder import CustomJSONEncoder
+from transf.customjson import CustomJSONEncoder
 from transf.mixin.operand import asOperand
 from transf.step import Step
 
