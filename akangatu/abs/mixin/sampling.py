@@ -4,8 +4,6 @@ from functools import cached_property
 
 from numpy.random.mtrand import choice
 
-from transf.absdata import InnocuousInnerData
-
 
 class withSampling(ABC):
     """Transform data according to a sampleable configuration.
@@ -15,7 +13,7 @@ class withSampling(ABC):
     and the implementer should override sample() at 'init':
     self.sample = self.sample_
     """
-    inner = InnocuousInnerData()  #TODO: verify if this class is still needed
+    inner = None
 
     @cached_property
     def held(self):
