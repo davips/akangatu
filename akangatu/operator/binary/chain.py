@@ -1,6 +1,6 @@
 from functools import cached_property, lru_cache
 import transf.operator as op
-from aiuna.content.specialdata import Root
+from aiuna.content.root import Root
 from akangatu.container import ContainerN
 
 
