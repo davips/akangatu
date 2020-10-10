@@ -6,7 +6,7 @@ class Rev(Container1):  # may not need new() from Container1
     """Useful to revert uuid of NoOps like Begin, End,"""
 
     def _process_(self, data: AbsData):
-        return data.replace(self)
+        return data.update(self)
 
     def _uuid_(self):
         return self.step.uuid.t

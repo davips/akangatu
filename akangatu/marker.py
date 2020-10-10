@@ -10,7 +10,7 @@ class asMarker(AbsStep):
     """Appears in history"""
 
     def _process_(self, data: AbsData):
-        return data.replace(self)
+        return data.update(self)
 
 
 class B(asMarker, Container1):
