@@ -1,10 +1,10 @@
 import json
 from abc import ABC, abstractmethod
 
+from aiuna.content.data import Data
 from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
 from transf._ins import Ins
-from transf.absdata import AbsData
 from transf.customjson import CustomJSONEncoder
 from transf.mixin.operand import asOperand
 from transf.step import Step
@@ -19,7 +19,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         self.step = step if isinstance(step, Step) else step()
         self._inner = None
 
-    def _core_process_(self, data: AbsData):
+    def _core_process_(self, data: Data):
         return self._process_(data)
 
     def _inner_(self):
@@ -29,7 +29,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         return {"step": self.step.parameters}
 
     @abstractmethod
-    def _process_(self, data: AbsData):
+    def _process_(self, data: Data):
         pass
 
     def _uuid_(self):  # TODO: deduplicate code; mais um mixin? classe mãe?
@@ -45,7 +45,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         return self.__class__.__name__ + f"[{self.step.longname}]"
 
     def __call__(self, inner):  # TODO: seed
-        if not isinstance(inner, AbsData):
+        if not isinstance(inner, Data):
             raise Exception("When calling a configured data dependent step, you should pass the training data! Not", type(inner))
         instance = self.__class__(self.step)
         instance._inner = inner
@@ -67,7 +67,7 @@ class ContainerN(Step, withSampling, asOperand, ABC):
             self.steps.append(step)
         self._inner = None
 
-    def _core_process_(self, data: AbsData):
+    def _core_process_(self, data: Data):
         return self._process_(data)
 
     def _inner_(self):
@@ -77,11 +77,11 @@ class ContainerN(Step, withSampling, asOperand, ABC):
         return {"steps": [step.parameters for step in self.steps]}
 
     @abstractmethod
-    def _process_(self, data: AbsData):
+    def _process_(self, data: Data):
         pass
 
     def __call__(self, inner):  # TODO: seed
-        if not isinstance(inner, AbsData):
+        if not isinstance(inner, Data):
             raise Exception("When calling a configured data dependent step, you should pass the training data! Not", type(inner))
         instance = self.__class__(*self.steps)
         instance._inner = inner

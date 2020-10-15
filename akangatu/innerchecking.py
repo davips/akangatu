@@ -1,11 +1,11 @@
+from aiuna.content.data import Data
 from akangatu.distep import DIStep
-from transf.absdata import AbsData
 from transf.mixin.config import asConfigLess
 from transf.mixin.noop import asNoOp
 
 
 class EnsureNoInner(asNoOp, asConfigLess, DIStep):
-    def _process_(self, data: AbsData):
+    def _process_(self, data: Data):
         if data.inner:
             print("Cannot proceed with inner data!", data.inner.id)
             exit()
@@ -13,7 +13,7 @@ class EnsureNoInner(asNoOp, asConfigLess, DIStep):
 
 
 class EnsureInner(asNoOp, asConfigLess, DIStep):
-    def _process_(self, data: AbsData):
+    def _process_(self, data: Data):
         if not data.inner:
             print("Cannot proceed without inner data!\n", data.id, ":", data.history ^ "longname")
             # raise Exception
