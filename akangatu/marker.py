@@ -1,16 +1,16 @@
-from akangatu.abs.delimiter import Delimiter
+from abc import ABC
 
+from aiuna.content.data import Data
 # HINT: dataclasses does not work inside operate(): "object type has no isclass attribute"
 from akangatu.container import Container1
-from transf.absdata import AbsData
-from transf.absstep import AbsStep
+from transf.step import Step
 
 
-class asMarker(AbsStep):
+class asMarker(Step, ABC):
     """Appears in history"""
 
-    def _process_(self, data: AbsData):
-        return data.replace(self)
+    def _process_(self, data: Data):
+        return data.update(self)
 
 
 class B(asMarker, Container1):
@@ -21,4 +21,3 @@ class B(asMarker, Container1):
 class E(asMarker, Container1):
     def _longname_(self):
         return "   " + self.step.steps[0].name + " }"
-

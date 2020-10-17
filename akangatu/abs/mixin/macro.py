@@ -1,9 +1,9 @@
 from abc import abstractmethod, ABC
 from functools import cached_property
 
+from aiuna.content.data import Data
 from akangatu.abs.delimiter import Begin, End
 from transf._ins import Ins
-from transf.absdata import AbsData
 from transf.mixin.identification import withIdentification
 
 
@@ -27,7 +27,7 @@ class asMacro(withIdentification, ABC):  # TODO: todo container precisa passar i
         return uuid
 
     def __call__(self, inner):  # TODO: seed
-        if not isinstance(inner, AbsData):
+        if not isinstance(inner, Data):
             raise Exception("When calling a configured data dependent step, you should pass the training data! Not", type(inner))
         instance = self.__class__()
         instance._inner = inner
