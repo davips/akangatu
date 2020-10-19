@@ -33,7 +33,10 @@ class withSampling(ABC):
         pass
 
     def _from_file(self):
-        filename = f"kururu/resources/parameters/{self.name}.json"
+        from kururu import tool
+        import os
+        path = os.path.abspath(tool.__file__)
+        filename = "/".join(path.split("/")[:-2]) + f"/resources/parameters/{self.name}.json"
         try:
             with open(filename, "r") as f:
                 # return Parameters(self.name, self.context, json.load(f))
@@ -41,6 +44,7 @@ class withSampling(ABC):
                 del params["meta-info"]
                 return params
         except FileNotFoundError:
+            return {"Not implemented params": []}  # TODO
             raise Exception(f"Impossible to sample. Missing parameters file:{filename}!")
 
     @classmethod
