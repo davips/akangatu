@@ -12,10 +12,10 @@ from transf.step import Step
 
 class Container1(Step, withSampling, asOperand, ABC):
     # noinspection PyDefaultArgument
-    def __init__(self, step, config={}):
+    def __init__(self, step, **config):
         config = config.copy()
         config["step"] = step
-        super().__init__(config)
+        super().__init__(**config)
         self.step = step if isinstance(step, Step) else step()
         self._inner = None
 
@@ -54,7 +54,7 @@ class Container1(Step, withSampling, asOperand, ABC):
 
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, steps):
-        super().__init__({"steps": steps})
+        super().__init__(steps=steps)
         self.steps = []
         for step in steps:
             if not isinstance(step, Step):
