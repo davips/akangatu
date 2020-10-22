@@ -1,7 +1,9 @@
 import json
 from abc import ABC, abstractmethod
+from functools import cached_property
 
 from aiuna.content.data import Data
+from aiuna.content.root import Root
 from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
 from transf._ins import Ins
@@ -14,9 +16,10 @@ class Container1(Step, withSampling, asOperand, ABC):
     # noinspection PyDefaultArgument
     def __init__(self, step, **config):
         config = config.copy()
+        step = step if isinstance(step, Step) else step()
         config["step"] = step
         super().__init__(**config)
-        self.step = step if isinstance(step, Step) else step()
+        self.step = step
         self._inner = None
 
     def _core_process_(self, data: Data):
@@ -51,12 +54,17 @@ class Container1(Step, withSampling, asOperand, ABC):
         instance._inner = inner
         return instance
 
+    @cached_property
+    def data(self):
+        """Result of a transformation from Root data."""
+        return self.process(Root)
+
 
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, steps):
-        super().__init__(steps=steps)
         self.steps = []
         for step in steps:
+            # print(type(step))
             if not isinstance(step, Step):
                 try:
                     step = step()
@@ -65,6 +73,7 @@ class ContainerN(Step, withSampling, asOperand, ABC):
                     print("Wrong arg for ContainerN:", step)
                     exit()
             self.steps.append(step)
+        super().__init__(steps=self.steps)
         self._inner = None
 
     def _core_process_(self, data: Data):
