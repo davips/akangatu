@@ -15,8 +15,9 @@ class Chain(op.Mul, ContainerN):
         ContainerN.__init__(self, steps)
 
     def _process_(self, data):  # TODO: expose internal models
-        for transf in self.steps:
-            data = transf.process(data)
+        for step in self.steps:
+            # print(11111111111111111111111111, step, 222222222222222222222222222)
+            data = step.process(data)
         return data
 
     @cached_property

@@ -6,5 +6,5 @@ from akangatu.innerchecking import EnsureInner
 class In(Container1):
     def _process_(self, data: Data):
         data = EnsureInner().process(data)
-        newinner = self.step.process(data.inner)
+        newinner = lambda: self.step.process(data.inner)
         return data.update(self, inner=newinner)
