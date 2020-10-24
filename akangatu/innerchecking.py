@@ -6,7 +6,7 @@ from transf.mixin.noop import asNoOp
 
 class EnsureNoInner(asNoOp, asConfigLess, DIStep):
     def _process_(self, data: Data):
-        if data.inner:
+        if data.hasinner:
             print("Cannot proceed with inner data!", data.inner.id)
             exit()
         return data
@@ -14,7 +14,7 @@ class EnsureNoInner(asNoOp, asConfigLess, DIStep):
 
 class EnsureInner(asNoOp, asConfigLess, DIStep):
     def _process_(self, data: Data):
-        if not data.inner:
+        if not data.hasinner:
             print("Cannot proceed without inner data!\n", data.id, ":", data.history ^ "longname")
             # raise Exception
             exit()
