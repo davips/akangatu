@@ -43,7 +43,7 @@ class Chain(op.Mul, ContainerN):
     #     return models
 
     def _longname_(self):
-        return '*'.join([tr.longname for tr in self.steps])
+        return ' * '.join([tr.longname for tr in self.steps])
 
     def _uuid_(self):
         uuid = self.steps[0].uuid

@@ -12,4 +12,4 @@ class Rev(Container1):  # may not need new() from Container1
         return self.step.uuid.t
 
     def _longname_(self):
-        return f" x {self.step.longname[3:]}"
+        return f"-{self.step.longname}"

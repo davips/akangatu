@@ -14,10 +14,12 @@ class asMarker(Step, ABC):
 
 
 class B(asMarker, Container1):
-    def _longname_(self):
-        return "   { " + self.step.steps[0].name
+    """"""
+    # def _longname_(self):
+    #     return "   { " + str(list(s.longname for s in self.step.steps))
 
 
 class E(asMarker, Container1):
-    def _longname_(self):
-        return "   " + self.step.steps[0].name + " }"
+    """"""
+    # def _longname_(self):
+    #     return "   " + self.step.steps[0].name + " }"
