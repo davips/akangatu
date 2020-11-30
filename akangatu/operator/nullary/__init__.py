@@ -20,18 +20,5 @@
 #  part of this work is a crime and is unethical regarding the effort and
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
-
-from transf.step import Step
-
-
-class Stream(Step):
-    def _transform_(self, data):
-        pass
-
-    def _config_(self):
-        pass
-
-    def parameters(self):
-        return {}
-
+#
 

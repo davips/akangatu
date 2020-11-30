@@ -20,11 +20,11 @@
 #  part of this work is a crime and is unethical regarding the effort and
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
+#
+class SingletonException(Exception):
+    """Exception"""
 
-# # Add sampling and operators to Ins
-# import transf._ins as tomonkeypatch
-# from akangatu.insert import Insert
-# tomonkeypatch.Ins = Insert
 
-# Populate namespace with custom operators for dynamic screening / inspection.
-from akangatu.operator.binary.product import Product  #TODO: delete this file after transf package removal
+class Empty(type):
+    def __call__(cls, *args, **kwargs):
+        raise SingletonException("Empty step is a singleton and cannot be instantiated!")

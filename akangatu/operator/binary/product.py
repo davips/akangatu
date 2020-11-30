@@ -27,7 +27,7 @@ from aiuna.content.root import Root
 from akangatu.container import ContainerN
 
 
-class Chain(op.Mul, ContainerN):
+class Product(op.Mul, ContainerN):
     def __init__(self, *args, steps=None):
         if args and steps:
             print("Wrong args: instantiating Chain is not recommended, use operator * instead.")
