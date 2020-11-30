@@ -22,8 +22,9 @@
 #  Relevant employers or funding agencies will be notified accordingly.
 
 from aiuna.content.data import Data
-from akangatu.distep import DIStep
 from transf.mixin.noop import asNoOp
+
+from akangatu.distep import DIStep
 
 
 class Forbid(asNoOp, DIStep):
@@ -45,6 +46,5 @@ class Ensure(asNoOp, DIStep):
 
     def _process_(self, data: Data):
         if self.field not in data:
-            # raise Exception
-            exit()
+            raise Exception(f"Field {self.field} not in data!")
         return data  # TODO: esses caras não aparecem no hist, mas poderiam ter placeholders; vale a pena? só se o histórico fosse usado p/ reconstruir expression original

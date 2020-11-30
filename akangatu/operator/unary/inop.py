@@ -27,6 +27,7 @@ from akangatu.fieldchecking import Ensure
 
 
 class In(Container1):
+    """Process the inner data with the provided step."""
     def _process_(self, data: Data):
         data = Ensure("inner").process(data)
         newinner = lambda: self.step.process(data.inner)
