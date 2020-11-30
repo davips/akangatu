@@ -36,12 +36,13 @@ from transf.step import Step
 
 
 class Container1(Step, withSampling, asOperand, ABC):
-    # noinspection PyDefaultArgument
+    # REMINDER: Container1 cannot have config by itself, because sampling it should sample its step,
+    #   and the sampled parameter values need to be passed somehow to its step.
     def __init__(self, step, **config):
         config = config.copy()
-        step = step if isinstance(step, Step) else step()
+        step = step if isinstance(step, Step) else step(**config)
         config["step"] = step
-        super().__init__(**config)
+        super().__init__()
         self.step = step
         self._inner = None
 
@@ -72,7 +73,8 @@ class Container1(Step, withSampling, asOperand, ABC):
 
     def __call__(self, inner):  # TODO: seed
         if not isinstance(inner, Data):
-            raise Exception("When calling a configured data dependent step, you should pass the training data! Not", type(inner))
+            raise Exception("When calling a configured data dependent step, you should pass the training data! Not",
+                            type(inner))
         instance = self.__class__(self.step)
         instance._inner = inner
         return instance
@@ -114,7 +116,8 @@ class ContainerN(Step, withSampling, asOperand, ABC):
 
     def __call__(self, inner):  # TODO: seed
         if not isinstance(inner, Data):
-            raise Exception("When calling a configured data dependent step, you should pass the training data! Not", type(inner))
+            raise Exception("When calling a configured data dependent step, you should pass the training data! Not",
+                            type(inner))
         instance = self.__class__(*self.steps)
         instance._inner = inner
         return instance
