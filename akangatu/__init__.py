@@ -22,9 +22,9 @@
 #  Relevant employers or funding agencies will be notified accordingly.
 
 # # Add sampling and operators to Ins
-# import transf._ins as tomonkeypatch
+# import akangatu.transf._ins as tomonkeypatch
 # from akangatu.insert import Insert
 # tomonkeypatch.Ins = Insert
 
 # Populate namespace with custom operators for dynamic screening / inspection.
-from akangatu.operator.binary.product import Product  #TODO: delete this file after transf package removal
+from akangatu.operator.binary.product import Product  #TODO: delete this file after akangatu.transf package removal

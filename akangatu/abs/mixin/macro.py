@@ -24,10 +24,9 @@
 from abc import abstractmethod, ABC
 from functools import cached_property
 
-from aiuna.content.data import Data
 from akangatu.abs.delimiter import Begin, End
-from transf._ins import Ins
-from transf.mixin.identification import withIdentification
+from akangatu.transf._ins import Ins
+from akangatu.transf.mixin.identification import withIdentification
 
 
 class asMacro(withIdentification, ABC):  # TODO: todo container precisa passar inner data pra dentro?
@@ -50,7 +49,7 @@ class asMacro(withIdentification, ABC):  # TODO: todo container precisa passar i
         return uuid
 
     def __call__(self, inner):  # TODO: seed
-        if not isinstance(inner, Data):
+        if not hasattr(inner, "hasinners"):  # just checking its a Data
             raise Exception("When calling a configured data dependent step, you should pass the training data! Not", type(inner))
         instance = self.__class__()
         instance._inner = inner

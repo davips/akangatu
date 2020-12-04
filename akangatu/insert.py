@@ -22,8 +22,8 @@
 #  Relevant employers or funding agencies will be notified accordingly.
 
 # from akangatu.abs.mixin.sampling import withSampling
-# from transf._ins import Ins as Ins_
-# from transf.mixin.operand import asOperand
+# from akangatu.transf._ins import Ins as Ins_
+# from akangatu.transf.mixin.operand import asOperand
 #
 #
 # class Insert(Ins_, withSampling, asOperand):

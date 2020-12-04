@@ -23,16 +23,13 @@
 
 import json
 from abc import ABC, abstractmethod
-from functools import cached_property
 
-from aiuna.content.data import Data
-from aiuna.content.root import Root
 from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
-from transf._ins import Ins
-from transf.customjson import CustomJSONEncoder
-from transf.mixin.operand import asOperand
-from transf.step import Step
+from akangatu.transf._ins import Ins
+from akangatu.transf.customjson import CustomJSONEncoder
+from akangatu.transf.mixin.operand import asOperand
+from akangatu.transf.step import Step
 
 
 class Container1(Step, withSampling, asOperand, ABC):
@@ -46,7 +43,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         self.step = step
         self._inner = None
 
-    def _core_process_(self, data: Data):
+    def _core_process_(self, data):
         return self._process_(data)
 
     def _inner_(self):
@@ -56,7 +53,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         return {"step": self.step.parameters}
 
     @abstractmethod
-    def _process_(self, data: Data):
+    def _process_(self, data):
         pass
 
     def _uuid_(self):  # TODO: deduplicate code; mais um mixin? classe mãe?
@@ -72,17 +69,12 @@ class Container1(Step, withSampling, asOperand, ABC):
         return self.__class__.__name__ + f"[{self.step.longname}]"
 
     def __call__(self, inner):  # TODO: seed
-        if not isinstance(inner, Data):
+        if not hasattr(inner, "hasinners"):  # just checking its a Data
             raise Exception("When calling a configured data dependent step, you should pass the training data! Not",
                             type(inner))
         instance = self.__class__(self.step)
         instance._inner = inner
         return instance
-
-    @cached_property
-    def data(self):
-        """Result of a transformation from Root data."""
-        return self.process(Root)
 
 
 class ContainerN(Step, withSampling, asOperand, ABC):
@@ -101,7 +93,7 @@ class ContainerN(Step, withSampling, asOperand, ABC):
         super().__init__(steps=self.steps)
         self._inner = None
 
-    def _core_process_(self, data: Data):
+    def _core_process_(self, data):
         return self._process_(data)
 
     def _inner_(self):
@@ -111,11 +103,11 @@ class ContainerN(Step, withSampling, asOperand, ABC):
         return {"steps": [step.parameters for step in self.steps]}
 
     @abstractmethod
-    def _process_(self, data: Data):
+    def _process_(self, data):
         pass
 
     def __call__(self, inner):  # TODO: seed
-        if not isinstance(inner, Data):
+        if not hasattr(inner, "hasinners"):  # just checking its a Data
             raise Exception("When calling a configured data dependent step, you should pass the training data! Not",
                             type(inner))
         instance = self.__class__(*self.steps)

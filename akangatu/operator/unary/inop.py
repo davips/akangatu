@@ -21,14 +21,13 @@
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
 
-from aiuna.content.data import Data
 from akangatu.container import Container1
 from akangatu.fieldchecking import Ensure
 
 
 class In(Container1):
     """Process the inner data with the provided step."""
-    def _process_(self, data: Data):
+    def _process_(self, data):
         data = Ensure("inner").process(data)
         newinner = lambda: self.step.process(data.inner)
         return data.update(self, inner=newinner)

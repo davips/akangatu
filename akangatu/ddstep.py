@@ -24,8 +24,8 @@
 from abc import ABC
 
 from akangatu.abs.mixin.sampling import withSampling
-from transf.datadependentstep_ import DataDependentStep_
-from transf.mixin.operand import asOperand
+from akangatu.transf.datadependentstep_ import DataDependentStep_
+from akangatu.transf.mixin.operand import asOperand
 
 
 class DDStep(DataDependentStep_, withSampling, asOperand, ABC):

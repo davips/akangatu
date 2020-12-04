@@ -21,9 +21,7 @@
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
 
-from functools import cached_property, lru_cache
-import transf.operator as op
-from aiuna.content.root import Root
+import akangatu.transf.operator as op
 from akangatu.container import ContainerN
 
 
@@ -43,10 +41,11 @@ class Product(op.Mul, ContainerN):
             data = step.process(data)
         return data
 
-    @cached_property
-    def data(self):
-        """Result of a transformation from Root data."""
-        return self.process(Root)
+    # @cached_property
+    # def data(self):
+    #     """Result of a transformation from Root data."""
+    #     from aiuna.content.root import Root
+    #     return self.process(Root)
 
     #TODO:
     #  colocar um campo mutable lastinner_m/lastmodel_m pra facilitar pegar um model de dentro do chain sem ter que reescrever o pipe até o momento

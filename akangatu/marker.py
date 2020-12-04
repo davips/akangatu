@@ -23,16 +23,15 @@
 
 from abc import ABC
 
-from aiuna.content.data import Data
 # HINT: dataclasses does not work inside operate(): "object type has no isclass attribute"
 from akangatu.container import Container1
-from transf.step import Step
+from akangatu.transf.step import Step
 
 
 class asMarker(Step, ABC):
     """Appears in history"""
 
-    def _process_(self, data: Data):
+    def _process_(self, data):
         return data.update(self)
 
 

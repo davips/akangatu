@@ -21,14 +21,13 @@
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
 
-from aiuna.content.data import Data
 from akangatu.container import Container1
 
 
 class Rev(Container1):  # may not need new() from Container1
     """Useful to revert uuid of NoOps like Begin, End,"""
 
-    def _process_(self, data: Data):
+    def _process_(self, data):
         return data.update(self)
 
     def _uuid_(self):

@@ -24,10 +24,9 @@
 from abc import abstractmethod, ABC
 from functools import cached_property
 
-from aiuna.content.data import Data
 from akangatu.container import Container1
 from akangatu.rev import Rev
-from transf.mixin.noop import asNoOp
+from akangatu.transf.mixin.noop import asNoOp
 
 
 class BadStep(Exception):
@@ -47,7 +46,7 @@ class Delimiter(asNoOp, Container1, ABC):
     # marker seria a grande exceção que teria efeito nulo mas precisa aparecer.
     # SOLUTION: the implementer/user should Rev the marker
     # FINAL: we provide both visible and invisible versions of the marker
-    def _process_(self, data: Data):
+    def _process_(self, data):
         from akangatu.marker import asMarker
         if not issubclass(self.wrapper, asMarker):
             raise BadStep("Step for a reversed Marker should be mixed in with asMarker")
