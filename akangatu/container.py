@@ -39,7 +39,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         config = config.copy()
         step = step if isinstance(step, Step) else step(**config)
         config["step"] = step
-        super().__init__()
+        super().__init__(**config)
         self.step = step
         self._inner = None
 

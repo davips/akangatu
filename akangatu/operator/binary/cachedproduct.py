@@ -20,19 +20,23 @@
 #  part of this work is a crime and is unethical regarding the effort and
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
+from more_itertools import intersperse
 
-import akangatu.transf.operator as op
 from akangatu.container import ContainerN
+import akangatu.transf.operator as op
+from akangatu.transf.config import CACHE
 
 
-class Product(op.Mul, ContainerN):
+class CachedProduct(op.Pow, ContainerN):
     def __init__(self, *args, steps=None):
         if args and steps:
-            print("Wrong args: instantiating Product is not recommended, use operator * instead.")
+            print("Wrong args: instantiating CachedProduct is not recommended, use operator ** instead.")
             exit()
         if args:
             steps = args
-        super().__init__(*steps)
+        # noinspection PyUnresolvedReferences
+        steps = list(intersperse(CACHE["cache"], steps))
+        op.Operator.__init__(self, *steps)
         ContainerN.__init__(self, steps)
 
     def _process_(self, data):  # TODO: expose internal models

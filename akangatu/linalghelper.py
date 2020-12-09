@@ -130,7 +130,11 @@ def evolve_id(uuid, uuids, step, fields):
             if uuid == UUID():  # whole data creation (e.g. from File; remember that fields are not lazy in this case)
                 muuid = UUID(json.dumps(value, sort_keys=True, ensure_ascii=False).encode()
                              if isinstance(value, list) else value.tobytes())
-            else:  # only matrix creation (avoids packing for non birth transformations)
+            else:
+                # only matrix creation (avoids packing for transformations aside from New/File etc)
+                # It is expected that fields resulting from real transformations will not repeat by chance,
+                # so we there is no concern about wasting storage/bandwidth sending identical contents with different uuids.
+                # Such situation is impossible in practice, unless for really small/trivial contents.
                 muuid = uuid * UUID(bytes(name, "latin1"))
 
         # Transform UUID.

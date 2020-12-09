@@ -64,7 +64,7 @@ CLASSIFIERS = ['Intended Audience :: Science/Research',
 
 
 INSTALL_REQUIRES = [
-    'numpy',
+    'numpy', "more_itertools"
 ]
 
 

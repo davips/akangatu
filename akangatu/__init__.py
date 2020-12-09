@@ -28,3 +28,4 @@
 
 # Populate namespace with custom operators for dynamic screening / inspection.
 from akangatu.operator.binary.product import Product  #TODO: delete this file after akangatu.transf package removal
+from akangatu.operator.binary.cachedproduct import CachedProduct  #TODO: delete this file after akangatu.transf package removal

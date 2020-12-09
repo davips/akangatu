@@ -32,7 +32,8 @@ def operate(operator, a, b):
         a = a()
     if hasattr(b, "isclass") and b.isclass:
         b = b()
-    if not isinstance(a, (Step, MetaOperand)) or not isinstance(b, (Step, MetaOperand)):
+    if not (issubclass(type(a), (Step, MetaOperand)) or isinstance(a, (Step, MetaOperand))) and \
+            not (issubclass(type(b), (Step, MetaOperand)) or isinstance(b, (Step, MetaOperand))):
         raise Exception(f"Operator {operator} undefined for {a.__class__.__name__} and {b.__class__.__name__}")
 
     operators = {op: op.__subclasses__()[0] for op in ops.Operator.__subclasses__() if op.__subclasses__()}
