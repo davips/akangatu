@@ -94,6 +94,7 @@ def field_as_matrix(name, field_value):
     if isinstance(field_value, (list, Iterator)):  # GeneratorType, map
         return field_value
 
+    print(f"{name} has unknown field type: ", type(field_value))
     raise Exception(f"{name} has unknown field type: ", type(field_value), "shape:", field_value.shape)
 
 
