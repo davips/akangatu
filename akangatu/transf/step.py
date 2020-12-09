@@ -206,8 +206,8 @@ class Step(withIdentification, withPrinting, ABC):
         klass = Step.get_class(path, name)
         # TODO 'step'(s) can be a parameter of some sklearn alg! it should be marked as reserved word
         try:
-            print("Reborning...", type(config), type(klass), config)
-            print("    reborning ", klass)
+            # print("Reborning...", type(config), type(klass), config)
+            # print("    reborning ", klass)
             reborn = klass(**config)
             if reborn.uuid.id != id_:
                 print("Recreated Step with wrong UUID:", reborn.uuid, "\nShould be:", id_, type(reborn), type(id_))
@@ -220,7 +220,7 @@ class Step(withIdentification, withPrinting, ABC):
     def get_class(module, class_name):
         import importlib
 
-        print("get_class >>> ", module, class_name)
+        # print("get_class >>> ", module, class_name)
         module = importlib.import_module(module)
         class_ = getattr(module, class_name)
         return class_
