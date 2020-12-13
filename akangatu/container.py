@@ -24,17 +24,19 @@
 import json
 from abc import ABC, abstractmethod
 
-from akangatu.abs.mixin.sampling import withSampling
 from cruipto.uuid import UUID
+
+from akangatu.abs.mixin.sampling import withSampling
 from akangatu.transf._ins import Ins
 from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.mixin.operand import asOperand
 from akangatu.transf.step import Step
 
 
-class Container1(Step, withSampling, asOperand, ABC):
-    # REMINDER: Container1 cannot have config by itself, because sampling it should sample its step,
-    #   and the sampled parameter values need to be passed somehow to its step.
+# TODO: container deve morrer?
+class Container(Step, withSampling, asOperand, ABC):
+    # REMINDER: Container cannot have config by itself, because sampling it should sample its steps,
+    # and the sampled parameter values need to be passed somehow to its step (so it accepts params, but not for itself).
     def __init__(self, step, **config):
         config = config.copy()
         step = step if isinstance(step, Step) else step(**config)
@@ -77,6 +79,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         return instance
 
 
+# TODO: precisa de containerN pra algo como union, ou haver apenas product basta?
 class ContainerN(Step, withSampling, asOperand, ABC):
     def __init__(self, steps):
         self.steps = []
@@ -115,7 +118,7 @@ class ContainerN(Step, withSampling, asOperand, ABC):
         return instance
 
 
-# TODO: unpredictable steps (e.g. recommenders) can have uuid U based on config as usual,
+# TODO: unpredictable steps (e.g. recommenders; the opposite of Macros) can have uuid U based on config as usual,
 #  and the history of the data being processed can also grow internally as usual and generate the actual uuid A, but, at the end,
 #  a corrective uuid X need to be appended, just like a final step F.
 #  A * X = U      X = U / A

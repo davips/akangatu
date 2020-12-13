@@ -261,3 +261,30 @@ class MissingField(Exception):
         self.data = data
         self.field = field
 
+
+
+
+"""
+https://stackoverflow.com/questions/9575409/calling-parent-class-init-with-multiple-inheritance-whats-the-right-way/50465583#50465583
+
+class FooMixin:
+    def __init__(self, *args, **kwargs):
+        print("inicio FooMixin")
+        super().__init__(*args, **kwargs)  # obscure REMINDER: calls parent of the class that uses this mixin
+        self.foo = 'foo'
+        print("fim FooMixin")
+
+class Bar:
+    def __init__(self, bar):
+        print("inicio Bar")
+        self.bar = bar
+        print("fim Bar")
+
+class FooBar(FooMixin, Bar):
+    def __init__(self, bar='bar'):
+        print("inicio FooBar")
+        super().__init__(bar)  # a single call is enough to invoke
+        print("fim FooBar")
+
+FooBar()
+"""
