@@ -25,7 +25,6 @@ import json
 from abc import ABC, abstractmethod
 
 from akangatu.abs.mixin.sampling import withSampling
-from garoupa.uuid import UUID
 from akangatu.transf._ins import Ins
 from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.mixin.operand import asOperand
@@ -57,6 +56,7 @@ class Container1(Step, withSampling, asOperand, ABC):
         pass
 
     def _uuid_(self):  # TODO: deduplicate code; mais um mixin? classe mãe?
+        from garoupa.uuid import UUID
         uuid = UUID(json.dumps(self.desc, sort_keys=True, ensure_ascii=False, cls=CustomJSONEncoder).encode())
         if self.inner:
             uuid = Ins(self.inner).uuid * uuid
