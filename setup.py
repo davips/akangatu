@@ -24,7 +24,6 @@
 
 import setuptools
 
-import akangatu
 
 NAME = "akangatu"
 
