@@ -20,7 +20,6 @@
 #  part of this work is a crime and is unethical regarding the effort and
 #  time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
-from more_itertools import intersperse
 
 from akangatu.container import ContainerN
 import akangatu.transf.operator as op
@@ -35,6 +34,7 @@ class CachedProduct(op.Pow, ContainerN):
         if args:
             steps = args
         # noinspection PyUnresolvedReferences
+        from more_itertools import intersperse
         steps = list(intersperse(CACHE["cache"], steps))
         op.Operator.__init__(self, *steps)
         ContainerN.__init__(self, steps)

@@ -22,7 +22,7 @@
 import json
 from abc import abstractmethod, ABC
 
-from cruipto.uuid import UUID
+from garoupa.uuid import UUID
 from akangatu.transf._ins import Ins
 from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.step import Step

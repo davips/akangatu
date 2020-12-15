@@ -25,7 +25,7 @@ import json
 from abc import ABC, abstractmethod
 
 from akangatu.abs.mixin.sampling import withSampling
-from cruipto.uuid import UUID
+from garoupa.uuid import UUID
 from akangatu.transf._ins import Ins
 from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.mixin.operand import asOperand

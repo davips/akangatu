@@ -19,7 +19,7 @@
 #  along with akangatu.transf.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from cruipto.uuid import UUID
+from garoupa.uuid import UUID
 
 
 # noinspection PyUnusedFunction,PyMethodMayBeStatic,PyUnusedClass

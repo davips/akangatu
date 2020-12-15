@@ -29,7 +29,7 @@ import akangatu
 NAME = "akangatu"
 
 
-VERSION = "0.20.15-a"
+VERSION = "0.20.12a"
 
 
 AUTHOR = 'Davi Pereira-Santos'
@@ -64,7 +64,7 @@ CLASSIFIERS = ['Intended Audience :: Science/Research',
 
 
 INSTALL_REQUIRES = [
-    'numpy', "more_itertools"
+    'numpy', "more_itertools", "garoupa"
 ]
 
 

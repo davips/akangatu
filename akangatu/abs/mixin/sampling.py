@@ -25,8 +25,6 @@ import json
 from abc import abstractmethod, ABC
 from functools import cached_property
 
-from numpy.random.mtrand import choice
-
 
 class withSampling(ABC):
     """Transform data according to a sampleable configuration.
@@ -75,6 +73,7 @@ class withSampling(ABC):
         return cls().sample_(track)
 
     def sample_(self, track=False):  # TODO: seed
+        from numpy.random.mtrand import choice
         config, choices = {}, {}
 
         def sample(dic):

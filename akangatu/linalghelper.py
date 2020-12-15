@@ -43,7 +43,7 @@ from typing import Optional, Iterator
 import numpy as np  # type: ignore
 from numpy import ndarray
 
-from cruipto.uuid import UUID
+from garoupa.uuid import UUID
 
 
 def _as_vector(mat: ndarray) -> ndarray:

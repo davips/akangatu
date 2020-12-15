@@ -30,7 +30,7 @@ from akangatu.transf.mixin.metaoperand import MetaOperand
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
         if obj is not None:
-            from cruipto.uuid import UUID
+            from garoupa.uuid import UUID
             if isinstance(obj, np.ndarray):
                 return str(obj).split("\n")
             elif isinstance(obj, UUID):
@@ -50,7 +50,7 @@ class CustomJSONDecoder(JSONDecoder):
 
     def object_hook(self, obj):
         if obj is not None:
-            from cruipto.uuid import UUID
+            from garoupa.uuid import UUID
             from akangatu.transf.step import Step
             # if isinstance(obj, str):  #np.ndarray
             #     return str(obj)

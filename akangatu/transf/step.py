@@ -44,8 +44,8 @@ from copy import copy
 from functools import cached_property, lru_cache
 from time import sleep
 
-from cruipto.decorator import classproperty
-from cruipto.uuid import UUID
+from garoupa.decorator import classproperty
+from garoupa.uuid import UUID
 from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.mixin.identification import withIdentification
 from akangatu.transf.mixin.printing import withPrinting
