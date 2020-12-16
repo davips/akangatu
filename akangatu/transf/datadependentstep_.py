@@ -1,22 +1,22 @@
 #  Copyright (c) 2020. Davi Pereira dos Santos
-#  This file is part of the akangatu.transf project.
+#  This file is part of the akangatu project.
 #  Please respect the license. Removing authorship by any means
 #  (by code make up or closing the sources) or ignoring property rights
 #  is a crime and is unethical regarding the effort and time spent here.
 #  Relevant employers or funding agencies will be notified accordingly.
 #
-#  akangatu.transf is free software: you can redistribute it and/or modify
+#  akangatu is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
-#  akangatu.transf is distributed in the hope that it will be useful,
+#  akangatu is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with akangatu.transf.  If not, see <http://www.gnu.org/licenses/>.
+#  along with akangatu  If not, see <http://www.gnu.org/licenses/>.
 #
 
 import json
@@ -75,12 +75,18 @@ class DataDependentStep_(Step, ABC):
             uuid = Ins(self.inner).uuid * uuid
         return uuid
 
-    def __call__(self, inner):
-        if self.inner:
+    def __call__(self, *args, **kwargs):
+        if any(map(lambda s: hasattr(s, "parent_uuid"), args)):
             raise Exception(f"Inner data already given at {self.name} constructor!", self.inner)
-        # noinspection PyArgumentList
-        instance = self.__class__(inner, **self.config)
-        return instance
+        kwargs.update(self._held_())
+        try:
+            # noinspection PyArgumentList
+            instance = self.__class__(*args, **kwargs)
+            return instance
+        except TypeError as e:
+            if "__init__() got multiple values for argument" in str(e):
+                param = str(e).split("'")[1]
+                raise Exception(f"Parameter [{param}] was already set for this {self.name} step.")
 
     def _longname_(self):
         return self.__class__.__name__
