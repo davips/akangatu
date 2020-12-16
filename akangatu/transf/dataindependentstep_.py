@@ -24,7 +24,7 @@ from abc import abstractmethod, ABC
 from akangatu.transf.step import Step
 
 
-class DataIndependentStep_(Step, ABC):
+class DIStep(Step, ABC):
     """ A step that doesn't dependent on (training) data """
     def _inner_(self):
         return None

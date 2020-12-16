@@ -60,6 +60,9 @@ class Step(withIdentification, withPrinting, ABC):
     isdd = False
     isoperator = False
 
+    # https://stackoverflow.com/a/6953515
+    subclasses = set()
+
     def __init__(self, **config):
         self.isclass = False
         if "sample_" in dir(self):
@@ -69,6 +72,12 @@ class Step(withIdentification, withPrinting, ABC):
 
     def __new__(cls, *args, **kwargs):
         instance = object.__new__(cls)
+        # Trickery to be able to use a step without explicitly instantiating it. E.g., File instead of File().
+        name = cls.__name__
+        if name not in S.subclasses:
+            globals()[name] = instance
+            Step.subclasses.add(name)
+
         if cls.isdi and any(hasattr(arg, "parent_uuid") for arg in args):
             print(f"Args: {args}\n")
             print(f"Data independent step {instance.name} is not allowed to have data in constructor!")

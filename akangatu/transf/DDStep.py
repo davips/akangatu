@@ -28,7 +28,7 @@ from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.step import Step
 
 
-class DataDependentStep_(Step, ABC):
+class DDStep(Step, ABC):
     """ A step dependent on (training) data """
     isdi = False
     isdd = True
