@@ -67,7 +67,32 @@ def _mat2sca(m: ndarray, default: float = None) -> Optional[float]:
     return default if m is None else m[0][0]
 
 
-def field_as_matrix(name, field_value):
+class PatchedArray(np.ndarray):
+    """Handle pandas conversion, and shortcuts to dimensions.
+
+    https://numpy.org/doc/stable/user/basics.subclassing.html"""
+
+    def __new__(cls, input_array, name, data):
+        # Cast to custom class type.
+        obj = np.asarray(input_array).view(cls)
+
+        # Patch it for pandas.
+        from pandas import DataFrame
+        desc = name + "d_m" if name.endswith("_m") else name + "d"
+        if desc in data.field_funcs_m:
+            obj.pd = DataFrame(data[name], columns=data[desc])
+        else:
+            obj.pd = DataFrame(data.[name])
+        # Finally, we must return the newly created object:
+        return obj
+
+    def __array_finalize__(self, obj):
+        # see InfoArray.__array_finalize__ for comments
+        if obj is None: return
+        self.info = getattr(obj, 'info', None)
+
+
+def field_as_matrix(name, field_value, desc=None):
     """Given a field, return its corresponding matrix or itself if it is a list."""
 
     # Special fields.
@@ -76,11 +101,11 @@ def field_as_matrix(name, field_value):
 
     # Matrix given directly.
     if isinstance(field_value, ndarray) and len(field_value.shape) == 2:
-        return field_value
+        return PatchedArray(field_value, name, desc)
 
     # Vector.
     if isinstance(field_value, ndarray) and len(field_value.shape) == 1:
-        return _as_column_vector(field_value)
+        return PatchedArray(_as_column_vector(field_value), name, desc)
 
     # Scalar.
     if isinstance(field_value, int):
