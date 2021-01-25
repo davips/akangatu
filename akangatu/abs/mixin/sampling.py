@@ -36,13 +36,15 @@ class withSampling(ABC):
     """
     inner = None
 
-    @cached_property
+    ###@cached_property
+    @property
     def held(self):
         # noinspection PyUnresolvedReferences
         return self._held_()
 
     # noinspection PyUnresolvedReferences
-    @cached_property
+    ###@cached_property
+    @property
     def parameters(self):
         params = self._parameters_()
         for k, v in self.held.items():

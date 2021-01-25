@@ -100,11 +100,13 @@ class Step(withIdentification, withPrinting, ABC):
     def _asdict_(self):
         return {"id": self.id, "desc": self.desc}
 
-    @cached_property
+    ###@cached_property
+    @property
     def desc(self):
         return {"name": self.name, "path": self.context, "config": self.config}
 
-    @cached_property
+    ###@cached_property
+    @property
     def asdict_rec(self):
         """Convert all internal steps as dict as well, recursively, if any is present at configs."""
         dic = self.asdict.copy()
@@ -140,15 +142,18 @@ class Step(withIdentification, withPrinting, ABC):
         #     exit()
         return out
 
-    @cached_property
+    ###@cached_property
+    @property
     def inner(self):
         return self._inner_()
 
-    @cached_property
+    ###@cached_property
+    @property
     def config_json(self):  # TODO aproveitar esse str no withPrinting?
         return json.dumps(self.config, cls=CustomJSONEncoder, sort_keys=True, ensure_ascii=False)
 
-    @cached_property
+    ###@cached_property
+    @property
     def config(self):
         if not hasattr(self, "_config"):
             print("Missing _config, perhaps a step implementation is calling super() lately inside __init__(). Step to check:", self.longname)
@@ -176,7 +181,8 @@ class Step(withIdentification, withPrinting, ABC):
     def _name_(self):
         return self.__class__.__name__
 
-    @cached_property
+    ###@cached_property
+    @property
     def longname(self):
         return self._longname_()
 
@@ -234,14 +240,16 @@ class Step(withIdentification, withPrinting, ABC):
         print(f"During step...   {self.longname}   ...the following exception occurred:\n\t"+str(exception))
         exit()
 
-    @cached_property
+    ###@cached_property
+    @property
     def pid(self):
         """UUID of the process/transformation performed by this step.
 
         NoOp steps override this to have have puuid=identity"""
         return self.puuid.id
 
-    @cached_property
+    ###@cached_property
+    @property
     def puuid(self):
         """UUID of the process/transformation performed by this step.
 
@@ -251,7 +259,8 @@ class Step(withIdentification, withPrinting, ABC):
     def __hash__(self):
         return id(self)
 
-    @cached_property
+    ###@cached_property
+    @property
     def dump(self):
         raise Exception("Not implemented!")
 

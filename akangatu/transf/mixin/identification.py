@@ -24,15 +24,18 @@ from functools import cached_property
 
 
 class withIdentification(ABC):
-    @cached_property
+    ###@cached_property
+    @property
     def name(self):
         return self._name_()
 
-    @cached_property
+    ###@cached_property
+    @property
     def context(self):
         return self._context_()
 
-    @cached_property
+    ###@cached_property
+    @property
     def uuid(self):
         return self._uuid_()
 

@@ -42,7 +42,8 @@ class withPrinting(ABC):
     """Mixin class to deal with string printing style"""
     pretty_printing = PRETTY_PRINTING
 
-    @cached_property
+    ###@cached_property
+    @property
     def asdict(self):
         self.pretty_printing = PRETTY_PRINTING
         return self._asdict_()

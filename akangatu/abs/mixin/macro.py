@@ -30,7 +30,8 @@ from akangatu.transf.mixin.identification import withIdentification
 
 
 class asMacro(withIdentification, ABC):  # TODO: todo container precisa passar inner data pra dentro?
-    @cached_property
+    ###@cached_property
+    @property
     def step(self):
         step = self._step_()
         return Begin(step) * step * End(step)

@@ -53,7 +53,8 @@ class Delimiter(asNoOp, Container1, ABC):
         wrapped = self.wrapper(self.step)
         return (wrapped * Rev(wrapped)).process(data)
 
-    @cached_property
+    ###@cached_property
+    @property
     def wrapper(self):
         return self._wrapper_()
 

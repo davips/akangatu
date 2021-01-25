@@ -45,7 +45,8 @@ class CachedProduct(op.Pow, ContainerN):
             data = step.process(data)
         return data
 
-    # @cached_property
+    # ###@cached_property
+    @property
     # def data(self):
     #     """Result of a transformation from Root data."""
     #     from aiuna.content.root import Root
@@ -53,7 +54,7 @@ class CachedProduct(op.Pow, ContainerN):
 
     #TODO:
     #  colocar um campo mutable lastinner_m/lastmodel_m pra facilitar pegar um model de dentro do chain sem ter que reescrever o pipe até o momento
-    # @lru_cache
+    # ###@lru_cache
     # def models(self, data=None):
     #     """Models."""
     #     if self.inner and data:
