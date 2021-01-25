@@ -28,7 +28,7 @@ import setuptools
 NAME = "akangatu"
 
 
-VERSION = "0.2101.2"
+VERSION = "0.2101.3"
 
 
 AUTHOR = 'Davi Pereira-Santos'
