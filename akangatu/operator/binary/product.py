@@ -43,10 +43,10 @@ class Product(op.Mul, ContainerN):
 
     # ###@cached_property
     @property
-    # def data(self):
-    #     """Result of a transformation from Root data."""
-    #     from aiuna.content.root import Root
-    #     return self.process(Root)
+    def data(self):
+        """Result of a transformation from Root data."""
+        from aiuna.content.root import Root
+        return self.process(Root)
 
     #TODO:
     #  colocar um campo mutable lastinner_m/lastmodel_m pra facilitar pegar um model de dentro do chain sem ter que reescrever o pipe até o momento

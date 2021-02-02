@@ -35,6 +35,8 @@ class CachedProduct(op.Pow, ContainerN):
             steps = args
         # noinspection PyUnresolvedReferences
         from more_itertools import intersperse
+        if "cache" not in CACHE:
+            raise Exception("Missing call to setcache(...).")
         steps = list(intersperse(CACHE["cache"], steps))
         op.Operator.__init__(self, *steps)
         ContainerN.__init__(self, steps)
@@ -47,10 +49,10 @@ class CachedProduct(op.Pow, ContainerN):
 
     # ###@cached_property
     @property
-    # def data(self):
-    #     """Result of a transformation from Root data."""
-    #     from aiuna.content.root import Root
-    #     return self.process(Root)
+    def data(self):
+        """Result of a transformation from Root data."""
+        from aiuna.content.root import Root
+        return self.process(Root)
 
     #TODO:
     #  colocar um campo mutable lastinner_m/lastmodel_m pra facilitar pegar um model de dentro do chain sem ter que reescrever o pipe até o momento
