@@ -113,6 +113,8 @@ class Step(withIdentification, withPrinting, ABC):
         cfg = dic["desc"]["config"]
         if "step" in cfg:
             dic["desc"]["config"]["step"] = cfg["step"].asdict
+        if "steps" in cfg:
+            dic["desc"]["config"]["steps"] = [step.asdict for step in cfg["steps"]]
         return dic
 
     def process(self, data, aslist=False, exit_on_error=True, maxtime=None):
