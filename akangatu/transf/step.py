@@ -156,8 +156,7 @@ class Step(withIdentification, withPrinting, ABC):
     @property
     def config(self):
         if not hasattr(self, "_config"):
-            print("Missing _config, perhaps a step implementation is calling super() lately inside __init__(). Step to check:", self.longname)
-            exit()
+            raise Exception("Missing _config, perhaps a step implementation is calling super() lately inside __init__(). Step to check:", self.longname)
         if callable(self._config):
             return self._config()  # For lazy configgers like File.
         else:
