@@ -111,10 +111,12 @@ class Step(withIdentification, withPrinting, ABC):
         """Convert all internal steps as dict as well, recursively, if any is present at configs."""
         dic = self.asdict.copy()
         cfg = dic["desc"]["config"]
-        if "step" in cfg:
-            dic["desc"]["config"]["step"] = cfg["step"].asdict
+        if "step" in cfg and not isinstance(cfg["step"], dict):
+            dic["desc"]["config"]["step"] = cfg["step"].asdict_rec
         if "steps" in cfg:
-            dic["desc"]["config"]["steps"] = [step.asdict for step in cfg["steps"]]
+            dic["desc"]["config"]["steps"] = [
+                step if isinstance(step, dict) else step.asdict_rec for step in cfg["steps"]
+            ]
         return dic
 
     def process(self, data, aslist=False, exit_on_error=True, maxtime=None):
@@ -270,4 +272,3 @@ class MissingField(Exception):
         super().__init__(msg)
         self.data = data
         self.field = field
-
