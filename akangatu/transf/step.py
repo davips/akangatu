@@ -41,7 +41,7 @@ import traceback
 from abc import abstractmethod, ABC
 from collections.abc import Iterable
 from copy import copy
-from functools import cached_property, lru_cache
+from functools import lru_cache
 from time import sleep
 
 from garoupa.decorator import classproperty

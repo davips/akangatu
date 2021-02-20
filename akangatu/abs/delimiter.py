@@ -22,7 +22,7 @@
 #  Relevant employers or funding agencies will be notified accordingly.
 
 from abc import abstractmethod, ABC
-from functools import cached_property
+# from functools import cached_property
 
 from akangatu.container import Container1
 from akangatu.rev import Rev

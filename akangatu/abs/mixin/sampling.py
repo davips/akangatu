@@ -23,7 +23,7 @@
 
 import json
 from abc import abstractmethod, ABC
-from functools import cached_property
+# from functools import cached_property
 
 
 class withSampling(ABC):
