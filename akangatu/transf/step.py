@@ -210,6 +210,8 @@ class Step(withIdentification, withPrinting, ABC):
             if "steps" in config:
                 raise Exception("A serialized Step cannot have both step and steps in config!")
             config["step"] = Step.fromdict(config["step"])
+        elif "storage" in config:
+            config["storage"] = Step.fromdict(config["storage"])
         elif "steps" in config:
             config["steps"] = [Step.fromdict(step) for step in config["steps"]]
         klass = Step.get_class(path, name)
