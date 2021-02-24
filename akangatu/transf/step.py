@@ -217,11 +217,11 @@ class Step(withIdentification, withPrinting, ABC):
         klass = Step.get_class(path, name)
         # TODO 'step'(s) can be a parameter of some sklearn alg! it should be marked as reserved word
         try:
-            print("Reborning...", type(config), type(klass), config)
-            print("    reborning ", klass)
+            print("Reborning...", type(config), type(klass), config, flush=True)
+            print("    reborning ", klass, flush=True)
             reborn = klass(**config)
             if reborn.uuid.id != id_:
-                print("Recreated Step with wrong UUID:", reborn.uuid, "\nShould be:", id_, type(reborn), type(id_))
+                print("Recreated Step with wrong UUID:", reborn.uuid, "\nShould be:", id_, type(reborn), type(id_), flush=True)
             return reborn
         except Exception as e:
             print(e)
