@@ -212,6 +212,7 @@ class Step(withIdentification, withPrinting, ABC):
             config["step"] = Step.fromdict(config["step"])
         elif "storage" in config:
             config["storage"] = Step.fromdict(config["storage"])
+            config["setcache"] = True
         elif "steps" in config:
             config["steps"] = [Step.fromdict(step) for step in config["steps"]]
         klass = Step.get_class(path, name)
