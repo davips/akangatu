@@ -223,7 +223,7 @@ class Step(withIdentification, withPrinting, ABC):
             return reborn
         except Exception as e:
             print(e)
-            raise Exception(f"Problems building fromdict {name}@{path} with config\n{config}")
+            raise Exception(f"{str(e)}  Problems building fromdict {name}@{path} with config\n{config}")
 
     @staticmethod
     def get_class(module, class_name):
