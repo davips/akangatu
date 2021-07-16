@@ -44,7 +44,6 @@ from copy import copy
 from functools import lru_cache
 from time import sleep
 
-from garoupa.decorator import classproperty
 from garoupa.uuid import UUID
 from akangatu.transf.customjson import CustomJSONEncoder
 from akangatu.transf.mixin.identification import withIdentification
