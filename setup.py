@@ -28,7 +28,7 @@ import setuptools
 NAME = "akangatu"
 
 
-VERSION = "0.2107.11"
+VERSION = "0.2107.12"
 
 
 AUTHOR = 'Davi Pereira-Santos'
@@ -63,7 +63,7 @@ CLASSIFIERS = ['Intended Audience :: Science/Research',
 
 
 INSTALL_REQUIRES = [
-    'numpy', "more_itertools", "garoupa"
+    'numpy', "more_itertools", "garoupa-0.2101.12"
 ]
 
 
